@@ -39,4 +39,10 @@ tags:
   这种情况下，检查自己的gatway和dns是否配置正确即可。
 
 
+3.最小化安装ifconfig找不到
+
+     yum install net-tools 
+
+
+
 
