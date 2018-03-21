@@ -21,6 +21,8 @@ IP地址：192.168.202.160
 
 目的：基本了解Elastic search，基于RestFull的形式可以无侵入的整合到现有的系统。
 
+软件版本：目前最新6.2.2
+
 ## 安装步骤
 
 ### 1.下载必要的软件包
@@ -138,6 +140,57 @@ systemctl disable firewalld.service   禁止防火墙开机启动
 
 重启启动，发现很多问题，提示很多错误，相关的错误解决方案的链接：[http://blog.csdn.net/weini1111/article/details/60468068](http://blog.csdn.net/weini1111/article/details/60468068)
 
+
+## java客户端连接
+
+新建一个maven项目，pom内容如下：
+
+     <dependencies>
+    <dependency>
+    <groupId>org.elasticsearch.client</groupId>
+    <artifactId>transport</artifactId>
+    <version>5.5.2</version>
+    </dependency>
+    </dependencies>
+    
+然后新建一个demo类，内容如下：
+    
+    package com.nklongyi.demo1;
+    
+    import org.elasticsearch.client.transport.TransportClient;
+    import org.elasticsearch.common.settings.Settings;
+    import org.elasticsearch.common.transport.InetSocketTransportAddress;
+    import org.elasticsearch.transport.client.PreBuiltTransportClient;
+    
+    import java.net.InetAddress;
+    import java.net.UnknownHostException;
+    
+    /**
+     * Created by longyi on 2018-03-21.
+     */
+    public class Demo1 {
+    
+    private static String host= "192.168.202.160";
+    private static int port=9002;
+    /**
+     * 
+     */
+    public static void main(String[] args) throws UnknownHostException {
+       InetAddress address = InetAddress.getByName(Demo1.host);
+    TransportClient client = new PreBuiltTransportClient(Settings.EMPTY)
+    .addTransportAddress(new InetSocketTransportAddress(address,Demo1.port));
+    
+    System.out.println(client);
+    
+    client.close();
+    
+    }
+    }
+    
+
+运行：
+
+org.elasticsearch.transport.client.PreBuiltTransportClient@3c49fab6
 
 
 
