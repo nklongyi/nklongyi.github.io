@@ -192,6 +192,19 @@ systemctl disable firewalld.service   禁止防火墙开机启动
 
 org.elasticsearch.transport.client.PreBuiltTransportClient@3c49fab6
 
+## elastic 遇到的坑
+
+1.启动elastic
+
+[elastic@localhost elasticsearch-6.2.2]$ ./bin/elasticsearch
+Error: Could not find or load main class org.elasticsearch.tools.launchers.JavaVersionChecker
+
+问题：该安装包在root目录下。
+
+解决方法：copy安装包到elastic的home下，然后去elastic的/home目录下执行。
+
+
+
 
 
 
