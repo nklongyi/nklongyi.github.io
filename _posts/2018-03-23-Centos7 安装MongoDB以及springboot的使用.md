@@ -52,6 +52,26 @@ MongoDB是一个基于分布式文件存储的数据库，它是一个介于关�
 
 [root@localhost ~]# yum install mongodb-org
 
+……
+    
+    Created symlink from /etc/systemd/system/multi-user.target.wants/mongod.service to /usr/lib/systemd/system/mongod.service.
+      Installing : mongodb-org-shell-3.4.14-1.el7.x86_64  2/5 
+      Installing : mongodb-org-tools-3.4.14-1.el7.x86_64  3/5 
+      Installing : mongodb-org-mongos-3.4.14-1.el7.x86_64 4/5 
+      Installing : mongodb-org-3.4.14-1.el7.x86_645/5 
+      Verifying  : mongodb-org-mongos-3.4.14-1.el7.x86_64 1/5 
+      Verifying  : mongodb-org-tools-3.4.14-1.el7.x86_64  2/5 
+      Verifying  : mongodb-org-shell-3.4.14-1.el7.x86_64  3/5 
+      Verifying  : mongodb-org-3.4.14-1.el7.x86_644/5 
+      Verifying  : mongodb-org-server-3.4.14-1.el7.x86_64 5/5 
+    
+    Installed:
+      mongodb-org.x86_64 0:3.4.14-1.el7   
+    
+    Dependency Installed:
+      mongodb-org-mongos.x86_64 0:3.4.14-1.el7   mongodb-org-server.x86_64 0:3.4.14-1.el7   mongodb-org-shell.x86_64 0:3.4.14-1.el7   mongodb-org-tools.x86_64 0:3.4.14-1.el7  
+    
+    Complete!
 
 
 
