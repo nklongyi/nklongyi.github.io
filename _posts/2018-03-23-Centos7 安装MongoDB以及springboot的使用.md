@@ -44,4 +44,14 @@ MongoDB是一个基于分布式文件存储的数据库，它是一个介于关�
 擦……竟然网络拦截了……what a pity！
 
 
+----------
+
+将电脑带回家，重新进行安装
+
+执行：yum repolist
+
+[root@localhost ~]# yum install mongodb-org
+
+
+
 
