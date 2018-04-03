@@ -143,3 +143,44 @@ tags:
 
 实际测试ok，更新.
 
+## 架构优化
+
+对于集群环境下，上一个案例中我们需要触发单个实例，触发哪个实例合适？实例与实例之间就是有区别了，如何做到后端的无差别，下面就是对集群结构进行的调整：
+
+[![20180403110123.png](https://s7.postimg.org/6wz16k497/20180403110123.png)](https://postimg.org/image/r4cgyv1qf/)
+
+变动点：
+
+1.config-server连接到消息总线
+
+2.bus refresh不再发到具体的实例，发送到配置服务器上即可触发集群配置更新，同时可以通过增加destination参数来指定更新实例。
+
+
+简单测试一下：
+
+1.将config-server增加bus依赖和actuator
+
+2.将配置改为：
+
+    ## 配置rabbitMq
+    spring.rabbitmq.host=192.168.202.170
+    spring.rabbitmq.port=5672
+    spring.rabbitmq.username=admin
+    spring.rabbitmq.password=12345
+    #允许发送post测试
+    management.security.enabled= false
+
+最后一个很重要，否则post过去就是401，务必注意。
+
+3.修改配置
+
+4.查看实例变化（无变化）
+
+5.给config-server post bus/refresh
+
+6.过一会就发现了实例有了更新
+
+
+
+
+
