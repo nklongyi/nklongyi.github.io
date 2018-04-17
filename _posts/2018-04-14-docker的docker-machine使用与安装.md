@@ -45,6 +45,8 @@ Docker Machine 是 Docker 官方编排（Orchestration）项目之一，负责�
 
 更多参数请使用 `docker-machine create --driver virtualbox --help` 命令查看。
 
+参考https://docs.docker.com/machine/drivers/generic/，来设置，根据不同的驱动类型来设置。
+
 ### 查看主机
 
     $ docker-machine ls
@@ -165,7 +167,57 @@ Swarm 是使用 SwarmKit 构建的 Docker 引擎内置（原生）的集群管�
     7qfdus18d7b4w27avexwxmdtj *   manager Ready   Active  Leader  18.03.0-ce
  
 
+#### 部署服务
 
+在主机上输入：docker service create --replicas 1 -p 80:80 --name nginx nginx:1.13.7-alpine
+
+查看服务：
+
+    [root@manager ~]# docker service ls
+    ID  NAMEMODEREPLICASIMAGE PORTS
+    o94x2qddcd7tnginx   replicated  1/1 nginx:1.13.7-alpine   *:80->80/tcp
+
+
+在浏览器输入：http://192.168.202.200/，就可以看到nginx的服务界面。
+
+查看服务详情：
+
+    [root@manager ~]# docker service ps nginx
+    ID  NAMEIMAGE NODEDESIRED STATE   CURRENT STATE   ERROR   PORTS
+    tdafo01hiqoxnginx.1 nginx:1.13.7-alpine   manager Running Running about an hour ago  
+
+查看服务日志：
+
+    [root@manager ~]# docker service logs nginx
+    nginx.1.tdafo01hiqox@manager| 10.255.0.2 - - [16/Apr/2018:16:55:32 +0000] "GET / HTTP/1.1" 200 612 "-" "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36" "-"
+    nginx.1.tdafo01hiqox@manager| 2018/04/16 16:55:32 [error] 5#5: *1 open() "/usr/share/nginx/html/favicon.ico" failed (2: No such file or directory), client: 10.255.0.2, server: localhost, request: "GET /favicon.ico HTTP/1.1", host: "192.168.202.200", referrer: "http://192.168.202.200/"
+    nginx.1.tdafo01hiqox@manager| 10.255.0.2 - - [16/Apr/2018:16:55:32 +0000] "GET /favicon.ico HTTP/1.1" 404 571 "http://192.168.202.200/" "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36" "-"
+    nginx.1.tdafo01hiqox@manager| 10.255.0.2 - - [16/Apr/2018:16:55:35 +0000] "GET / HTTP/1.1" 304 0 "-" "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36" "-"
+    nginx.1.tdafo01hiqox@manager| 10.255.0.2 - - [16/Apr/2018:16:55:35 +0000] "GET / HTTP/1.1" 304 0 "-" "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36" "-"
+    nginx.1.tdafo01hiqox@manager| 10.255.0.2 - - [16/Apr/2018:16:55:36 +0000] "GET / HTTP/1.1" 304 0 "-" "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36" "-"
+    nginx.1.tdafo01hiqox@manager| 10.255.0.2 - - [16/Apr/2018:17:45:35 +0000] "GET / HTTP/1.1" 304 0 "-" "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36" "-"
+    nginx.1.tdafo01hiqox@manager| 10.255.0.2 - - [16/Apr/2018:17:45:36 +0000] "GET / HTTP/1.1" 304 0 "-" "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36" "-" 
+
+移除服务：
+
+    docker service rm nginx 
+
+页面就无法访问了。
+
+#### docker machine创建虚拟节点
+
+    [root@manager ~]# docker-machine create -d generic --generic-ip-address=192.168.10.1 manager1
+    
+因为我们用的是普通的linux部署docker，所以使用generic driver通用driver，其他driver可以参考：https://docs.docker.com/machine/drivers/
+
+    [root@manager ~]# docker-machine create -d generic --generic-ip-address=192.168.10.1 manager1
+    Running pre-create checks...
+    Creating machine...
+    (manager1) No SSH key specified. Assuming an existing key at the default location.
+    Waiting for machine to be running, this may take a few minutes...
+
+
+时间太长了，ctrl+c关闭了。
 
 
 
